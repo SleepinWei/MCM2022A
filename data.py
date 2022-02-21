@@ -65,7 +65,8 @@ turn_theta = [angle(120),angle(90),angle(90),angle(60),angle(90),angle(90),angle
 calculate_theta_w(theta_w_1,road_theta_1) # 计算风和路面的夹角
 
 # women elite UCI
-Nd = 29 
+Nd_2 = 29 
+N_turn_2 = 12
 x2 = [0,1.5,2.2,2.6,2.9,4.0,5.0,6.1,6.7,7.3,8.5,9.5,10.4,11.3,13.8,14.9,16.0,17.3,18.5,20,21.55,22.7,23.6,25.0,26.3,27.3,27.9,28.9,30.1,30.4] 
 wind_theta_2 = math.radians(wind_theta_dict["N"]) # 要改一下，打不开文件了
 road_theta_2 = np.array([
