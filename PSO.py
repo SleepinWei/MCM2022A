@@ -15,6 +15,7 @@ class PSO():
     w = 0.8 # 惯性系数
     c1 = 0.5 # 个体最优系数
     c2 = 0.5 # 全局最优系数
+    seed = 12345
 
     p = np.zeros((Np,Nd)) # 粒子的位置
     p_mode = np.zeros((Np,N_turn)) #  表示弯角的数量
@@ -35,6 +36,8 @@ class PSO():
 
     def init(self,func):
         # initialize the position of points 
+        random.seed(self.seed)
+        np.random.seed(self.seed)
         for i in range(self.Np):
             self.p[i,:] = self.Xmin + np.random.rand(1,self.Nd) \
                 * (self.Xmax-self.Xmin) 

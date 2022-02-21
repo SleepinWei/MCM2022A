@@ -2,7 +2,7 @@ import math
 mu = 0.001 
 m = 70 
 g = 9.8 
-k = 5 
+k = 3 
 # P0 = 500 
 # v_w = 5
 CP = 300
