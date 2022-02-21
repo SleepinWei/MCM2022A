@@ -4,7 +4,7 @@ from config import *
 import matplotlib.pyplot as plt 
 
 def angle(x):
-    return np.float(np.radians(x))
+    return float(np.radians(x))
 N = 24  # 赛道分为 N 段
 # W_bal = W0 # initialize W_bal 
 # x1 = [0.9,1.8-0.9,3.0-2.0,4.0-2.0,5.0-4.0,6.0-5.0,7.0-6.0,7.4-7.0,8.4-7.4,9.0-8.4,10.0-9.0,11.0-10.0,12.0-11.0,13.8-12.0,15.4-13.8,17.4-15.4,18.1-17.4,19.1-18.1,20-19.1,21.4-20\
@@ -34,7 +34,7 @@ def func(W_bal,P,x,theta,v_w,theta_w):
         W_bal -= (P-CP) * x / v(P,theta,v_w,theta_w)
     else:
         W_exp = W0 - W_bal 
-        t = np.float(x) / v(P,theta,v_w,theta_w) 
+        t = float(x) / v(P,theta,v_w,theta_w) 
         W_bal = W0 - W_exp * math.pow(math.e,-t/tau(P)) 
     
     return W_bal 
@@ -45,20 +45,20 @@ def T_total(P,turn_choice):
     result = 0
     W_bal = W0 
     for i in range(np.size(P)):
-        W_bal_test = func(W_bal,np.float(P[i]),np.float(x[i]),np.float(theta[i]),np.float(v_w[i]),np.float(theta_w[i]))
+        W_bal_test = func(W_bal,float(P[i]),float(x[i]),float(theta[i]),float(v_w[i]),float(theta_w[i]))
 
         if W_bal_test < 0: 
             # result += k* W_bal**2
             P[i] = CP * 0.99
-            W_bal = func(W_bal,np.float(P[i]),np.float(x[i]),np.float(theta[i]),np.float(v_w[i]),np.float(theta_w[i]))
+            W_bal = func(W_bal,float(P[i]),float(x[i]),float(theta[i]),float(v_w[i]),float(theta_w[i]))
         else:
             W_bal = W_bal_test
-        result += np.float(x[i])/v(np.float(P[i]),np.float(theta[i]),np.float(v_w[i]),np.float(theta_w[i]))
+        result += float(x[i])/v(float(P[i]),float(theta[i]),float(v_w[i]),float(theta_w[i]))
 
         if i in turn_index : 
             index = turn_index.index(i)
-            W_exp = turn.W_exp_turn(turn_theta[index],np.int(turn_choice[index]))
-            t_exp = turn.t_exp_turn(turn_theta[index],np.int(turn_choice[index])) 
+            W_exp = turn.W_exp_turn(turn_theta[index],int(turn_choice[index]))
+            t_exp = turn.t_exp_turn(turn_theta[index],int(turn_choice[index])) 
             result += t_exp
             W_bal -= W_exp 
             
@@ -79,7 +79,7 @@ W_bals.append(W0)
 def cal_W(P):
     W_bal = W0
     for i in range(np.size(P)): 
-        W_bal = func(W_bal,np.float(P[i]),np.float(x[i]),np.float(theta[i]),np.float(v_w[i]),theta_w[i])
+        W_bal = func(W_bal,float(P[i]),float(x[i]),float(theta[i]),float(v_w[i]),theta_w[i])
         W_bals.append(W_bal)
 stage = [i for i in range(N+1)]
 cal_W(P)

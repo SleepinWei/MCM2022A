@@ -1,7 +1,7 @@
 import numpy as np
 import math
 def angle(x):
-    return np.float(np.radians(x))
+    return float(np.radians(x))
 
 x1 = [0.9,1.8-0.9,3.0-2.0,4.0-2.0,5.0-4.0,6.0-5.0,7.0-6.0,7.4-7.0,8.4-7.4,9.0-8.4,10.0-9.0,11.0-10.0,12.0-11.0,13.8-12.0,15.4-13.8,17.4-15.4,18.1-17.4,19.1-18.1,20-19.1,21.4-20\
     ,22.3-20,24.8-22.3,25.9-24.8,27-25.9]
@@ -27,7 +27,10 @@ wind_theta_dict = {
     "NNW": 337.5 + 180
 }
 wind_theta = math.radians(wind_theta_dict["NNE"])
-road_theta= np.zeros(24) # 路面与北方向的夹角
+road_theta= np.array([
+    70,225,180,270,180,150,210,330,
+    225,250,220,180,180,225,0,340,60,135,140,230,240,0,230,180
+]) # 路面与北方向的夹角
 theta_w = np.radians(5) * np.ones(24) # 风与路面夹角数据，在下方进行处理
 
 def calculate_theta(x,height): # 处理坡度的函数
@@ -36,7 +39,7 @@ def calculate_theta(x,height): # 处理坡度的函数
 def calculate_theta_w(theta_w,road_theta): # 处理风与道路夹角的函数
     # wind_theta: float, road_theta: list
     for i in range(np.size(road_theta)):
-        theta_w[i] = np.float(road_theta[i]) - wind_theta 
+        theta_w[i] = math.radians(np.float(road_theta[i])) - wind_theta 
     
 theta_1 = [
     calculate_theta(x1[i],height[i]) for i in range(len(x1))
