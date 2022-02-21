@@ -13,12 +13,20 @@ def v(P,theta,v_w,theta_w,k):
     b = mu * m * g - k * v_w * math.cos(theta_w) + m * g * math.sin(math.radians(theta)) 
     a = k 
     c = -P 
-    return (-b + math.sqrt(b**2 - 4 * a *c )) / (2 * a )
+    v = 0
+    try:
+        v = (-b + math.sqrt(b**2 - 4 * a *c )) / (2 * a )
+    except:
+        print(a)
+        print(b)
+        print(c)
+        print(P)
+    return v
     
 # 在什么 P 下休息最佳
 
-def DCP(P,i):
-    return CP[i] - P 
+def DCP(P,CP):
+    return CP- P 
 
 def tau(P,i):
     # P stands for power at rest 

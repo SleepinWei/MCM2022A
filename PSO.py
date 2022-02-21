@@ -105,6 +105,7 @@ class PSO():
         print("")
         import matplotlib.pyplot as plt 
 
+        plt.figure(1)
         plt.subplot(2,2,1)
         plt.title("x ~ iteration")
         plt.plot(self.iters,self.x_best_s,label=["x"+str(i) for i in range(self.Nd)])

@@ -9,7 +9,7 @@ class PSO():
     Nd = 24# dimension  
     N_turn = 17 # the number of turns 
     Np = 500 # 粒子个数
-    Nm = 300 # 迭代次数
+    Nm = 100 # 迭代次数
     C1 = 0
 
     w = 0.8 # 惯性系数
@@ -90,7 +90,7 @@ class PSO():
                     self.x_best_g = self.p[i,:]
                     self.mode_best_g = self.p_mode[i,:]
 
-            # print("iter: "+str(k)+" C_best : " + str(self.C_best_g) + " x_best : " + str(self.x_best_g))
+            print("iter: "+str(k)+" C_best : " + str(self.C_best_g) + " x_best : " + str(self.x_best_g))
             self.iters.append(k)
             self.x_best_s.append(self.x_best_g)
             self.C_best_s.append(self.C_best_g)
@@ -123,3 +123,32 @@ class PSO():
 
     def getValue(self):
         return self.C_best_g,self.x_best_g,self.mode_best_g
+    
+    def save(self,path):
+        with open(path,"w") as file:
+            file.write("C_best_g: " + str(self.C_best_g) + "\n")
+            file.write("x_best_g: ")
+            for p in self.x_best_g:
+                file.write(str(p) + " , ")
+            file.write("\n")
+            file.write("mode_best_g: ")
+            for p in self.mode_best_g:
+                file.write(str(p) + " , ")
+            file.write("\n")
+            file.write("x_best_s: ")
+            for p in self.x_best_s:
+                file.write(str(p) + "\n")
+            file.write("\n")
+            file.write("C_best_s: ")
+            for p in self.C_best_s:
+                file.write(str(p) + " , ")
+            file.write("\n")
+            file.write("turn_choice_s: ")
+            for p in self.turn_choice_s:
+                file.write(str(p) + "\n")
+            file.write("\n")
+            # x_best_s = [] 
+            # C_best_s = [] 
+            # turn_choice_s = []
+
+
