@@ -26,21 +26,35 @@ wind_theta_dict = {
     "NW":315 + 180,
     "NNW": 337.5 + 180
 }
-wind_theta = math.radians(wind_theta_dict["NNE"])
-road_theta= np.array([
-    70,225,180,270,180,150,210,330,
-    225,250,220,180,180,225,0,340,60,135,140,230,240,0,230,180
-]) # 路面与北方向的夹角
-theta_w = np.radians(5) * np.ones(24) # 风与路面夹角数据，在下方进行处理
-
 def calculate_theta(x,height): # 处理坡度的函数
     return math.atan(height * 0.3048 / (x * 1609.344))
 
 def calculate_theta_w(theta_w,road_theta): # 处理风与道路夹角的函数
     # wind_theta: float, road_theta: list
     for i in range(np.size(road_theta)):
-        theta_w[i] = math.radians(float(road_theta[i])) - wind_theta 
+        theta_w[i] = math.radians(float(road_theta[i])) - wind_theta_1 
     
+def calculate_x(x2):
+    result = []
+    for i in range(len(x2)-1):
+        result.append(x2[i+1]-x2[i])
+    return result
+
+def calculate_turn_theta(turn_theta):
+    result = []
+    for theta in turn_theta: 
+        result.append(math.radians(theta))
+    return result
+
+# men elite UCI
+wind_theta_1 = math.radians(wind_theta_dict["NNE"])
+road_theta_1 = np.array([
+    70,225,180,270,180,150,210,330,
+    225,250,220,180,180,225,0,340,60,135,140,230,240,0,230,180
+]) # 路面与北方向的夹角
+theta_w_1 = np.radians(5) * np.ones(24) # 风与路面夹角数据，在下方进行处理
+
+
 theta_1 = [
     calculate_theta(x1[i],height[i]) for i in range(len(x1))
 ] # 路面坡度数据
@@ -48,12 +62,26 @@ turn_index = [0,1,2,3,3,4,7,8,11,12,13,15,16,17,18,19,19] # 拐角对应的片�
 turn_theta = [angle(120),angle(90),angle(90),angle(60),angle(90),angle(90),angle(80),angle(90),angle(70),angle(90),angle(60),angle(90),angle(60)\
     ,angle(90),angle(90),angle(90) ,angle(90)][::-1]
     # 转弯角度数据
-calculate_theta_w(theta_w,road_theta) # 计算风和路面的夹角
+calculate_theta_w(theta_w_1,road_theta_1) # 计算风和路面的夹角
 
-x2 = [] 
+# women elite UCI
+Nd = 29 
+x2 = [0,1.5,2.2,2.6,2.9,4.0,5.0,6.1,6.7,7.3,8.5,9.5,10.4,11.3,13.8,14.9,16.0,17.3,18.5,20,21.55,22.7,23.6,25.0,26.3,27.3,27.9,28.9,30.1,30.4] 
+wind_theta_2 = math.radians(wind_theta_dict["N"]) # 要改一下，打不开文件了
+road_theta_2 = np.array([
+    50,225,180,270,180,140,140,130,210,180,200,210,225,330,230,260,220,70,120,150,150,210,210,210,210,270,225,150,180
+])
+theta_w_2 = np.radians(5) * np.ones(np.size(x2)) # 路、风夹角 
+turn_index_2 = [0,1,2,3,5,10,11,14,18,19,22,23] 
+turn_theta_2 = [135,90,90,90,45,100,90,110,60,70,90,70]
+
+x2 = calculate_x(x2)
+calculate_theta_w(theta_w_2,road_theta_2)
+turn_theta_2 = calculate_turn_theta(turn_theta_2)
+
 x3 = [] 
 x4 = []
 
 if __name__ == "__main__":
-    for p in theta_1:
-        print(180 / math.pi * p)
+    print(len(turn_index_2))
+    print(len(turn_theta_2))

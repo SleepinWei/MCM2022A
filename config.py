@@ -7,7 +7,7 @@ k = 5
 # v_w = 5
 CP = 300
 # theta = 5 
-W0 = 50000
+W0 = 20000
 
 def v(P,theta,v_w,theta_w):
     b = mu * m * g - k * v_w * math.cos(theta_w) + m * g * math.sin(math.radians(theta)) 
@@ -23,3 +23,6 @@ def DCP(P):
 def tau(P):
     # P stands for power at rest 
     return 546 * math.pow(math.e,-0.01*DCP(P)) + 316 
+
+if __name__ == "__main__":
+    pass
