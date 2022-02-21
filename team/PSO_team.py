@@ -123,4 +123,3 @@ class PSO():
 
     def getValue(self):
         return self.C_best_g,self.x_best_g,self.mode_best_g
-

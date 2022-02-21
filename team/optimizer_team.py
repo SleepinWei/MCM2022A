@@ -14,25 +14,30 @@ theta = np.array(theta_1)
 turn_index = turn_index_1
 turn_theta = turn_theta_1
 theta_w = theta_w_1
+W_s = np.array([12000,11500,12500,11000,11500,12500])
 
 v_w = 6 * np.ones(np.size(x))# 女子风速
 
-def func(W_bal,P,x,theta,v_w,theta_w):
+def func(W_bal,P,CP,x,theta,v_w,theta_w,k):
     # compute the chagne of W_bal
     if P > CP: 
-        W_bal -= (P-CP) * x / v(P,theta,v_w,theta_w)
+        W_bal -= (P-CP) * x / v(P,theta,v_w,theta_w,k)
     else:
         W_exp = W0 - W_bal 
-        t = float(x) / v(P,theta,v_w,theta_w) 
+        t = float(x) / v(P,theta,v_w,theta_w,k) 
         W_bal = W0 - W_exp * math.pow(math.e,-t/tau(P)) 
     
     return W_bal 
+
+def W_change_team(W_team,P,x,theta,v_w,theta_w,i):
+    pass
 
 import turn
 def T_total(P,turn_choice):
     # P is a vector 
     result = 0
-    W_bal = W0 
+    W_bal = W_s  # numpy function
+    mem_no = 0  # 挡风队员的序号
     for i in range(np.size(P)):
         W_bal_test = func(W_bal,float(P[i]),float(x[i]),float(theta[i]),float(v_w[i]),float(theta_w[i]))
 
@@ -78,7 +83,6 @@ plt.title("W_bal ~ stage ")
 plt.plot(stage,W_bals,c="y",label="W_bal")
 plt.legend()
 
-plt.savefig("./individual.jpg")
+plt.savefig("./team.jpg")
 
 plt.show()
-
