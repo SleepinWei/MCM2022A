@@ -39,7 +39,7 @@ def calculate_theta(x,height): # 处理坡度的函数
 def calculate_theta_w(theta_w,road_theta): # 处理风与道路夹角的函数
     # wind_theta: float, road_theta: list
     for i in range(np.size(road_theta)):
-        theta_w[i] = math.radians(np.float(road_theta[i])) - wind_theta 
+        theta_w[i] = math.radians(float(road_theta[i])) - wind_theta 
     
 theta_1 = [
     calculate_theta(x1[i],height[i]) for i in range(len(x1))

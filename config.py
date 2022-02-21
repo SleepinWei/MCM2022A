@@ -7,7 +7,7 @@ k = 5
 # v_w = 5
 CP = 300
 # theta = 5 
-W0 = 20000
+W0 = 50000
 
 def v(P,theta,v_w,theta_w):
     b = mu * m * g - k * v_w * math.cos(theta_w) + m * g * math.sin(math.radians(theta)) 
