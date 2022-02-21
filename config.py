@@ -25,4 +25,12 @@ def tau(P):
     return 546 * math.pow(math.e,-0.01*DCP(P)) + 316 
 
 if __name__ == "__main__":
-    pass
+    import matplotlib.pyplot as plt 
+    import numpy as np
+    theta = 0
+    k = np.arange(0,10,0.1)
+    P = 500 
+    v_w = 1
+    v_s = [v(P,theta,v_w,180,K) for K in k]
+    plt.plot(k,v_s)
+    plt.show()

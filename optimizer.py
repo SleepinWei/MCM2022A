@@ -21,12 +21,18 @@ N = 24  # 赛道分为 N 段
 # x2 = [] 
 # x3 = [] 
 # x4 = []
-from data import x1,turn_index,turn_theta,theta_1,theta_w
+from data import x1,turn_index_1,turn_theta_1,theta_1,theta_w_1
+from data import x2,turn_index_2,turn_theta_2,theta_2,theta_w_2
 
-x = np.array(x1) * 1609 
-theta = np.array(theta_1)
+# x = np.array(x1) 
+# theta = np.array(theta_1)
+x = np.array(x2)
+theta = np.array(theta_2)
+turn_index = turn_index_2
+turn_theta = turn_theta_2
+theta_w = theta_w_2
 
-v_w = 0 * np.ones(N)
+v_w = 11.3 * np.ones(np.size(x))# 女子风速
 
 def func(W_bal,P,x,theta,v_w,theta_w):
     # compute the chagne of W_bal
