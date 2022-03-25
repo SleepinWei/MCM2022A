@@ -9,7 +9,7 @@ class PSO():
     Nd = 24# dimension  
     N_turn = 17 # the number of turns 
     Np = 500 # 粒子个数
-    Nm = 100 # 迭代次数
+    Nm = 10 # 迭代次数
     C1 = 0
 
     w = 0.8 # 惯性系数

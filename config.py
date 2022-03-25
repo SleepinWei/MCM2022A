@@ -3,11 +3,14 @@ mu = 0.001
 m = 70 
 g = 9.8 
 k = 3 
-# P0 = 500 
-# v_w = 5
 CP = 354.12
-# theta = 5 
 W0 = 11429.3 
+# CP = 344.05
+# W0 = 14055.71
+# CP = 326.61
+# W0 = 7946.05
+# CP = 326.31
+# W0 = 7466.11
 
 def v(P,theta,v_w,theta_w):
     b = mu * m * g - k * v_w * math.cos(theta_w) + m * g * math.sin(math.radians(theta)) 

@@ -15,11 +15,12 @@ turn_index = turn_index_1
 turn_theta = turn_theta_1
 theta_w = theta_w_1
 W_s = np.array([12000,11500,12500,11000,11500,12500])
-change_ratio = 0.4 # 换人的能量比例
+# print(W_s)
+change_ratio = 0.2 # 换人的能量比例
 
 v_w = 6 * np.ones(np.size(x))# 女子风速
 
-def func(W0,W_bal,P,CP,x,theta,v_w,theta_w,k):
+def func(W0,W_bal,P,CP,x,theta,v_w,theta_w,k)->float:
     # compute the chagne of W_bal
     if P > CP: 
         W_bal -= (P-CP) * x / v(P,theta,v_w,theta_w,k)
@@ -51,27 +52,28 @@ def W_change_team(W_team,P,x,theta,v_w,theta_w,mem_no,k):
             else:
                 W_exp = W_s[i] - W_team[i] 
                 t = float(x) / v(P_other,theta,v_w,theta_w,k) 
-                W_team[i] = W_s[i] - W_exp * math.pow(math.e,-t/tau(P_other,CP[mem_no])) 
+                W_team[i] = W_s[i] - W_exp * math.pow(math.e,-t/tau(P_other,CP[i])) 
     # 返回第一个人的剩余能量
                 
 import turn
 def T_total(P,turn_choice):
     # P is a vector 
     result = 0
-    global W_s
+    # global W_s
     W_bal = W_s  # numpy function
     mem_no = 0  # 挡风队员的序号
     for i in range(np.size(P)):
         # W_bal_test = func(W_bal,float(P[i]),float(x[i]),float(theta[i]),float(v_w[i]),float(theta_w[i]))
         W_first_test = func_W_left(W_bal,float(P[i]),float(x[i]),float(theta[i]),float(v_w[i]),float(theta_w[i]),mem_no,k)
 
-        if W_first_test < change_ratio * float(W_s[mem_no]) :
-            # 如果能量较小，则换人
-            mem_no = (mem_no + 1) % 6
-            W_change_team(W_bal,float(P[i]),float(x[i]),float(theta[i]),float(v_w[i]),float(theta_w[i]),mem_no,k)
-        elif func_W_left(W_bal,float(P[i]),float(x[i]),float(theta[i]),float(v_w[i]),float(theta_w[i]),(mem_no+1)%6,k) < change_ratio * float(W_s[(mem_no+1)%6]): 
+        if W_first_test < change_ratio * W_s[mem_no] and \
+        func_W_left(W_bal,float(P[i]),float(x[i]),float(theta[i]),float(v_w[i]),float(theta_w[i]),(mem_no+1)%6,k) < change_ratio * float(W_s[(mem_no+1)%6]): 
             # 如果所有人都能量不足，集体进入休息
             P[i] = 0.99 * CP[mem_no]   
+            W_change_team(W_bal,float(P[i]),float(x[i]),float(theta[i]),float(v_w[i]),float(theta_w[i]),mem_no,k)
+        elif W_first_test < change_ratio * float(W_s[mem_no]) :
+            # 如果能量较小，则换人
+            mem_no = (mem_no + 1) % 6
             W_change_team(W_bal,float(P[i]),float(x[i]),float(theta[i]),float(v_w[i]),float(theta_w[i]),mem_no,k)
         else:
             W_change_team(W_bal,float(P[i]),float(x[i]),float(theta[i]),float(v_w[i]),float(theta_w[i]),mem_no,k) 
@@ -113,14 +115,15 @@ def cal_W(P):
         if W_first_test < change_ratio * W_s[mem_no] :
             mem_no = (mem_no + 1) % 6
         W_change_team(W_team,float(P[i]),float(x[i]),float(theta[i]),float(v_w[i]),(theta_w[i]),mem_no,k)
-        W_bals.append(W_team)
+        # print(W_team)
+        W_bals.append(W_team[:])
         mem_change.append(mem_no)
 stage = [i for i in range(N+1)]
 cal_W(P)
 
 plt.subplot(2,2,3)
 plt.title("W_bal ~ stage ")
-plt.plot(stage,W_bals,c="y",label=["mem_" + str(i) for i in range(6)])
+plt.plot(stage,W_bals,label=["mem_" + str(i) for i in range(6)])
 plt.legend()
 
 plt.savefig("./team.jpg")

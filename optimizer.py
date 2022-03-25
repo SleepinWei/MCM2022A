@@ -7,6 +7,8 @@ def angle(x):
 
 from data import x1,turn_index_1,turn_theta_1,theta_1,theta_w_1
 from data import x2,turn_index_2,turn_theta_2,theta_2,theta_w_2
+from data import x3,turn_index_3,turn_theta_3,theta_3,theta_w_3
+from data import x4,turn_index_4,turn_theta_4,theta_4,theta_w_4
 
 x = np.array(x1)
 N = np.size(x)  # 赛道分为 N 段
@@ -61,6 +63,7 @@ optimizer = PSO()
 optimizer.init(T_total)
 optimizer.iter(T_total)
 tmin, P ,choice= optimizer.getValue()
+optimizer.save("result.txt")
 optimizer.show()
 
 W_bals = [] 
@@ -72,11 +75,37 @@ def cal_W(P):
         W_bals.append(W_bal)
 stage = [i for i in range(N+1)]
 cal_W(P)
-
 plt.subplot(2,2,3)
 plt.title("W_bal ~ stage ")
 plt.plot(stage,W_bals,c="y",label="W_bal")
 plt.legend()
+
+distance = []
+distance.append(0)
+dist = 0
+for i in range(len(stage)-1):
+    dist += float(x[i])  
+    distance.append(dist/1000)
+with open("W'.txt","w") as file:
+    file.write(str(W_bals))
+    file.write("\n")
+    file.write(str(distance))
+plt.figure(2)
+plt.style.use("bmh")
+plt.title("W' ~ distance")
+plt.xlabel("distance/km")
+plt.ylabel("W'/J")
+plt.plot(distance,W_bals,label="W'")
+plt.legend()
+
+plt.figure(3)
+plt.style.use("bmh")
+plt.title("T ~ iterations")
+plt.xlabel("iterations")
+plt.ylabel("T")
+plt.plot(optimizer.iters,optimizer.C_best_s,label="T")
+plt.legend()
+
 
 plt.savefig("./individual.jpg")
 

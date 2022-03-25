@@ -15,7 +15,8 @@ class PSO():
     w = 0.8 # 惯性系数
     c1 = 0.5 # 个体最优系数
     c2 = 0.5 # 全局最优系数
-    seed = 666 
+    # seed = random.randint(0,2**31-1)
+    seed = 873184818
 
     p = np.zeros((Np,Nd)) # 粒子的位置
     p_mode = np.zeros((Np,N_turn)) #  表示弯角的数量
@@ -103,6 +104,7 @@ class PSO():
         for el in self.mode_best_g:
             print(str(el) + " ",end="")
         print("")
+        print("seed : " + str(self.seed))
         import matplotlib.pyplot as plt 
 
         plt.figure(1)
@@ -125,3 +127,26 @@ class PSO():
     def getValue(self):
         return self.C_best_g,self.x_best_g,self.mode_best_g
 
+    def save(self,path):
+        with open(path,"w") as file:
+            file.write("C_best_g: " + str(self.C_best_g) + "\n")
+            file.write("x_best_g: ")
+            for p in self.x_best_g:
+                file.write(str(p) + " , ")
+            file.write("\n")
+            file.write("mode_best_g: ")
+            for p in self.mode_best_g:
+                file.write(str(p) + " , ")
+            file.write("\n")
+            file.write("x_best_s: ")
+            for p in self.x_best_s:
+                file.write(str(p) + "\n")
+            file.write("\n")
+            file.write("C_best_s: ")
+            for p in self.C_best_s:
+                file.write(str(p) + " , ")
+            file.write("\n")
+            file.write("turn_choice_s: ")
+            for p in self.turn_choice_s:
+                file.write(str(p) + "\n")
+            file.write("\n")
